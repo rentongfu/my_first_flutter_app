@@ -53,6 +53,7 @@ class SearchPageState extends State<SearchPage> {
                             MaterialButton(
                                 onPressed: _onCancelButtonClicked,
                                 child: Text("取消"),
+                                minWidth: 24,
                             )
                         ] : <Widget>[
                             Expanded(
