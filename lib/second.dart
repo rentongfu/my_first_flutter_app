@@ -3,10 +3,6 @@ import 'package:flutter/material.dart';
 
 class MySecondPage extends StatefulWidget {
     final String title = "子页面";
-
-    MySecondPage() {
-    }
-
     @override
     State<StatefulWidget> createState() {
         return MySecondPageState();
