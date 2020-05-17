@@ -72,40 +72,114 @@ class SearchPageState extends State<SearchPage> {
                 Expanded(
                     child: ListView.separated(
                         itemBuilder: (context , index){
-                            return Padding(
-                                padding:  EdgeInsets.fromLTRB(10.0 , 8.0 , 10.0 , 8.0),
-                                child: Column(
-                                    children: <Widget>[
-                                        Text("ListView Item" , style: TextStyle(fontSize: 18 , color: Color.fromARGB(0xFF, 0, 0, 0)  ),  textAlign: TextAlign.right,),
-                                        Align(
-                                            alignment:Alignment.centerRight ,
-                                            child: Text("2020-05-11 22:29" , style: TextStyle(fontSize: 12 , color: Color.fromARGB(0xFF, 0x7F, 0x7F, 0x7F) ), ),),
-                                    ],
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                ) ,
-                            );},
+                            return Material(
+                                color: Colors.white,
+                                child: InkWell(
+                                    customBorder: null,
+                                    onTap: () async {
+                                        print( "列表项$index被点击");
+                                        var result = await showDialog<String>(
+                                            context: context,
+                                            barrierDismissible: false,
+                                            builder: (BuildContext buildContext){
+                                                return AlertDialog(
+                                                    title: Text("提示"),
+                                                    content: Text( "列表项$index被点击"),
+                                                    actions: <Widget>[
+                                                        FlatButton(
+                                                            child: Text("OK"),
+                                                            onPressed: (){
+                                                                Navigator.pop(buildContext , "OK");
+                                                            },
+                                                        ),
+                                                        FlatButton(
+                                                            child: Text("Cancel"),
+                                                            onPressed: (){
+                                                                Navigator.pop(buildContext , "Cancel");
+                                                            },
+                                                        )
+                                                    ],
+                                                );
+                                            }
+                                        );
+                                        if(result == "OK"){
+                                            showDialog(
+                                                context: context,
+                                                barrierDismissible: false,
+                                                builder: (BuildContext buildContext){
+                                                    return AlertDialog(
+                                                        title: Text("提示"),
+                                                        content: Text( "用户点击了OK"),
+                                                        actions: <Widget>[
+                                                            FlatButton(
+                                                                child: Text("OK"),
+                                                                onPressed: (){
+                                                                    Navigator.pop(buildContext , "OK");
+                                                                },
+                                                            ),
+                                                        ],
+                                                    );
+                                                }
+                                            );
+                                        }else{
+                                            showDialog(
+                                                context: context,
+                                                barrierDismissible: false,
+                                                builder: (BuildContext buildContext){
+                                                    return AlertDialog(
+                                                        title: Text("提示"),
+                                                        content: Text( "用户点击了Cancel"),
+                                                        actions: <Widget>[
+                                                            FlatButton(
+                                                                child: Text("OK"),
+                                                                onPressed: (){
+                                                                    Navigator.pop(buildContext , "OK");
+                                                                },
+                                                            ),
+                                                        ],
+                                                    );
+                                                }
+                                            );
+                                        }
+                                    },
+                                    child: Padding(
+                                        padding:  EdgeInsets.fromLTRB(10.0 , 8.0 , 10.0 , 8.0),
+                                        child: Column(
+                                            children: <Widget>[
+                                                Text("ListView Item" , style: TextStyle(fontSize: 18 , color: Color.fromARGB(0xFF, 0, 0, 0)  ),  textAlign: TextAlign.right,),
+                                                Align(
+                                                    alignment:Alignment.centerRight ,
+                                                    child: Text("2020-05-11 22:29" , style: TextStyle(fontSize: 12 , color: Color.fromARGB(0xFF, 0x7F, 0x7F, 0x7F) ), ),),
+                                            ],
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                        ) ,
+
+                                    ),
+                                ),
+                            );
+                            },
                         separatorBuilder: ( context,  index){
-                            return Divider(height: 1.0, color: Color.fromARGB(0xFF, 0, 0, 0 ));
+                            return GestureDetector(
+                                behavior: HitTestBehavior.opaque,
+                                child: Divider(height:1, color: Color.fromARGB(0xFF, 0, 0, 0 )),
+                                onTap: (){
+                                    print( "分割线$index被点击");
+                                },
+                            );
                         },
                         itemCount: 20
                     ),
                 ),
             ],
         );
-        return new ListView(children: _getListItems());
-    }
-
-    List<Widget> _getListItems(){
-        List<Widget> widgets = [];
-        for(int i = 0 ; i < 20 ; i++){
-
-
-        }
-        return widgets;
     }
 
     void _onCancelButtonClicked() {
         if(_searchTextFieldFocusNode!=null)
             _searchTextFieldFocusNode.unfocus();
+    }
+
+    void _onSearchListItemClick(int index){
+
     }
 }
